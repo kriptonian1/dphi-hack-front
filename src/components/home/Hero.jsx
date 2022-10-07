@@ -27,7 +27,7 @@ const Hero = () => {
                         </div>
 
                         <div>
-                            <button onClick={() => navigate('/edit')} className='font-Poppins py-2 px-4 mt-6 hover:bg-[#F0F0F0] hover:shadow-xl bg-white text-[#003145] rounded-md'>
+                            <button onClick={() => navigate('/create-event')} className='font-Poppins py-2 px-4 mt-6 hover:bg-[#F0F0F0] hover:shadow-xl bg-white text-[#003145] rounded-md'>
                                 Create Challenge
                             </button>
                         </div>

@@ -11,25 +11,25 @@ const hackData = [
     title: "Data Science Bootcamp - Graded Datathon",
     description:
       "This is a 3 day long datathon where you will be given a dataset and you have to perform data analysis and build a model to predict the target variable. The top 3 participants will be awarded with cash prizes.",
-    startTime: "2022-10-16",
+    startTime: "2022-10-21",
     endTime: "2026-11-07",
   },
   {
     id: 2,
     image: img2,
     status: "Upcoming",
-    level: "Easy",
+    level: "Medium",
     title: "Data Sprint 72 - Butterfly Identification",
     description:
       "This is a 3 day long datathon where you will be given a dataset and you have to perform data analysis and build a model to predict the target variable. The top 3 participants will be awarded with cash prizes.",
-    startTime: "2022-10-07",
+    startTime: "2022-10-29",
     endTime: "2026-11-07",
   },
   {
     id: 3,
     image: img3,
     status: "Active",
-    level: "Medium",
+    level: "Easy",
     title: "Data Sprint 71 - Weather Recognition",
     description:
       "This is a 3 day long datathon where you will be given a dataset and you have to perform data analysis and build a model to predict the target variable. The top 3 participants will be awarded with cash prizes.",

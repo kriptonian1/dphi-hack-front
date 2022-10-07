@@ -1,17 +1,24 @@
-import React, { useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import { clock, easyLevelIcon, hardLevelIcon, mediumLevelIcon } from '../assets/icons'
 import { Navbar } from '../components'
 import preventOnDragImg from '../utils/preventOnDragImg'
 import { Helmet } from 'react-helmet'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import hackData from '../../data/data'
+import { Dialog, Transition } from '@headlessui/react'
 
 const Details = (props) => {
 
     let params = useParams()
+    const navigate = useNavigate();
 
     const data = hackData.find((hack) => hack.id == params.id)
 
+    /**
+     * @name levelIcon
+     * @description returns the level icon based on the difficulty level
+     * @returns {image} image of the hackathon based on the level
+     */
     const levelIcon = () => {
         if (data.level === 'Easy') {
             return easyLevelIcon
@@ -23,7 +30,17 @@ const Details = (props) => {
             return hardLevelIcon
         }
     };
-    
+
+    const [isOpen, setIsOpen] = useState(false)
+
+    const closeModal = () => {
+        setIsOpen(false)
+    }
+
+    const openModal = () => {
+        setIsOpen(true)
+    }
+
 
     return (
         <div className='font-Poppins'>
@@ -71,10 +88,10 @@ const Details = (props) => {
                 </div>
 
                 <div className='space-x-4'>
-                    <button className='bg-[#44924C] border-[#44924C] border-2 px-7 py-2 rounded-xl text-white font-semibold'>
+                    <button onClick={() => navigate(`/edit/${params.id}`)} className='bg-[#44924C] border-[#44924C] border-2 px-7 py-2 rounded-xl text-white font-semibold'>
                         Edit
                     </button>
-                    <button className='border-[#DC1414] hover:bg-[#dc1414c0] hover:text-white border-2 px-7 py-2 rounded-xl text-[#DC1414] font-semibold'>
+                    <button onClick={() => openModal()} className='border-[#DC1414] hover:bg-[#dc1414c0] hover:text-white border-2 px-7 py-2 rounded-xl text-[#DC1414] font-semibold'>
                         Delete
                     </button>
                 </div>
@@ -84,6 +101,69 @@ const Details = (props) => {
             <div className='flex flex-col px-[10vw] py-10 space-y-5'>
                 {data.description}
             </div>
+
+
+            {/* Dialog for confirm delete */}
+            <Transition show={isOpen} as={Fragment}>
+                <Dialog as="div" className="relative z-10" open={isOpen} onClose={closeModal}>
+                    <Transition.Child
+                        as={Fragment}
+                        enter="ease-out duration-300"
+                        enterFrom="opacity-0"
+                        enterTo="opacity-100"
+                        leave="ease-in duration-200"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                    >
+                        <div className="fixed inset-0 bg-black bg-opacity-25" />
+                    </Transition.Child>
+
+                    <div className="fixed inset-0 overflow-y-auto">
+                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                            <Transition.Child
+                                as={Fragment}
+                                enter="ease-out duration-300"
+                                enterFrom="opacity-0 scale-95"
+                                enterTo="opacity-100 scale-100"
+                                leave="ease-in duration-200"
+                                leaveFrom="opacity-100 scale-100"
+                                leaveTo="opacity-0 scale-95"
+                            >
+                                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                    <Dialog.Title
+                                        as="h3"
+                                        className="text-lg font-medium leading-6 text-gray-900"
+                                    >
+                                        Are you sure you want to delete this hackathon?
+                                    </Dialog.Title>
+
+                                    <div className='flex justify-evenly'>
+                                        <div className="mt-4">
+                                            <button
+                                                type="button"
+                                                className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-white hover:bg-[#dc1414da] bg-[#dc1414c0] hover focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                                onClick={closeModal}
+                                            >
+                                                Yes Delete it
+                                            </button>
+                                        </div>
+                                        <div className="mt-4">
+                                            <button
+                                                type="button"
+                                                className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                                onClick={closeModal}
+                                            >
+                                                Nope, I changed my mind
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </Dialog.Panel>
+                            </Transition.Child>
+                        </div>
+                    </div>
+                </Dialog>
+            </Transition>
 
         </div>
     )

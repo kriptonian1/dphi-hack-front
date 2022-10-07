@@ -3,20 +3,27 @@ import { Helmet } from 'react-helmet';
 import { arrowGreen, cloud_upload, imagefill } from '../assets/icons';
 import { Navbar } from '../components'
 
+/**
+ * @name Edit
+ * @description renders the edit page
+ * @returns {JSX.Element} Edit page
+ */
 const Edit = () => {
 
   const currentDate = new Date();
   const [image, setImage] = useState(null)
 
+
+  /**
+   * @name onImageChange
+   * @description handles the image change
+   * @param {*} event event of the image change
+   */
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       setImage(URL.createObjectURL(event.target.files[0]));
     }
   };
-
-  const handleDateChange = (e) => {
-    console.log(e.target.value)
-  }
 
   return (
     <div>

@@ -5,6 +5,8 @@ import { tick } from '../../../assets/icons'
 
 /**
  * @name HackCard
+ * @description renders the hack card
+ * @param {*} id id of the hack
  * @param {*} img  thumbnail image
  * @param {*} status  status of the hackathon
  * @param {*} title  title of the hackathon
@@ -13,7 +15,12 @@ import { tick } from '../../../assets/icons'
  * @returns {JSX.Element} HackCard
  */
 const HackCard = ({ id,img, status, title, startTime, endTime }) => {
-
+    /**
+     * @name statusColor
+     * @description returns the status color based on the status
+     * @param {*} status status of the hackathon 
+     * @returns {string} color of the status
+     */
     const statusColor = (status) => {
         if (status === 'Upcoming') {
             return 'bg-[#F2C94C40]'
@@ -26,6 +33,11 @@ const HackCard = ({ id,img, status, title, startTime, endTime }) => {
         }
     }
 
+    /**
+     * @name statusTimeText
+     * @param {*} status status of the hackathon
+     * @returns {string} time word based on the status
+     */
     const statusTimeText = (status) => {
         if (status === 'Upcoming') {
             return 'Starts in'
@@ -38,6 +50,13 @@ const HackCard = ({ id,img, status, title, startTime, endTime }) => {
         }
     }
 
+    /**
+     * @name statusTime     
+     * @param {*} status status of the hackathon
+     * @param {*} startTime start time of the hackathon
+     * @param {*} endTime end time of the hackathon
+     * @returns {string} time based on the status
+     */
     const statusTime = (status, startTime, endTime) => {
         if (status === 'Upcoming') {
             return startTime
@@ -49,7 +68,12 @@ const HackCard = ({ id,img, status, title, startTime, endTime }) => {
             return endTime
         }
     }
-
+    /**
+     * @name endedDate
+     * @description returns the date of the hackathon ended in human readable format
+     * @param {*} endTime end time of the hackathon
+     * @returns {string} time in days
+     */
     const endedData = (endTime) => {
         const stripedDate = endTime.split("-");
         const date = new Date(stripedDate[0], stripedDate[1] - 1, stripedDate[2]);
@@ -58,6 +82,11 @@ const HackCard = ({ id,img, status, title, startTime, endTime }) => {
         return humanReadableDate;
     }
 
+    /**
+     * @name calculateTimeRemaining
+     * @param {*} statusTime time of the hackathon
+     * @returns {string} time in days
+     */
     const calculateTimeRemaining = (statusTime) => {
         const now = new Date()
         const then = new Date(startTime)
@@ -65,11 +94,10 @@ const HackCard = ({ id,img, status, title, startTime, endTime }) => {
         const days = Math.floor(diff / 1000 / 60 / 60 / 24)
         const hours = Math.floor(diff / 1000 / 60 / 60) % 24
         const minutes = Math.floor(diff / 1000 / 60) % 60
-        const seconds = Math.floor(diff / 1000) % 60
-        return { days, hours, minutes, seconds }
+        return { days, hours, minutes}
     }
 
-    const { days, hours, minutes, seconds } = calculateTimeRemaining(startTime)
+    const { days, hours, minutes} = calculateTimeRemaining(startTime)
 
     const navigate = useNavigate();
 

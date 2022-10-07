@@ -5,6 +5,8 @@ const Filter = ({addData,removeData,arrVal}) => {
 
     const [open, setOpen] = useState(false)
 
+    
+
     const [selectedAll, setSelectedAll] = useState(false)
     const [selectedActive, setSelectedActive] = useState(false)
     const [selectedUpcoming, setSelectedUpcoming] = useState(false)
@@ -14,6 +16,14 @@ const Filter = ({addData,removeData,arrVal}) => {
     const [selectedMedium, setSelectedMedium] = useState(false)
     const [selectedHard, setSelectedHard] = useState(false)
 
+  
+    
+/**
+ * @name handleCheck
+ * @description handle the checkbox selection and add the selected value to the array
+ *               and remove the unselected value from the array
+ * @param {*} e event of the checkbox
+ */
     const handleCheck = (e) => {
         const val = e.target.value;
 
@@ -114,16 +124,13 @@ const Filter = ({addData,removeData,arrVal}) => {
                         </p>
                         <div className='my-3 text-[#858585]'>
                             <div>
-                                <input onChange={(e) => handleCheck(e)} type="checkbox" name="All" value="All" /> All
+                                <input onChange={(e) => handleCheck(e)} checked={selectedActive} type="checkbox" name="Active" value="Active" /> Active
                             </div>
                             <div>
-                                <input onChange={(e) => handleCheck(e)} type="checkbox" name="Active" value="Active" /> Active
+                                <input onChange={(e) => handleCheck(e)} checked={selectedUpcoming} type="checkbox" name="Upcoming" value="Upcoming" /> Upcoming
                             </div>
                             <div>
-                                <input onChange={(e) => handleCheck(e)} type="checkbox" name="Upcoming" value="Upcoming" /> Upcoming
-                            </div>
-                            <div>
-                                <input onChange={(e) => handleCheck(e)} type="checkbox" name="Past" value="Past" /> Past
+                                <input onChange={(e) => handleCheck(e)} checked={selectedPast} type="checkbox" name="Past" value="Past" /> Past
                             </div>
 
                         </div>
@@ -136,13 +143,13 @@ const Filter = ({addData,removeData,arrVal}) => {
                         </p>
                         <div className='my-3 text-[#858585]'>
                             <div>
-                                <input onChange={(e) => handleCheck(e)} type="checkbox" name="Easy" value="Easy" /> Easy
+                                <input onChange={(e) => handleCheck(e)} checked={selectedEasy} type="checkbox" name="Easy" value="Easy" /> Easy
                             </div>
                             <div>
-                                <input onChange={(e) => handleCheck(e)} type="checkbox" name="Medium" value="Medium" /> Medium
+                                <input onChange={(e) => handleCheck(e)} checked={selectedMedium} type="checkbox" name="Medium" value="Medium" /> Medium
                             </div>
                             <div>
-                                <input onChange={(e) => handleCheck(e)} type="checkbox" name="Hard" value="Hard" /> Hard
+                                <input onChange={(e) => handleCheck(e)} checked={selectedHard} type="checkbox" name="Hard" value="Hard" /> Hard
                             </div>
                         </div>
 
