@@ -10,6 +10,7 @@ const ExploreChallenge = () => {
     const current = new Date()
 
     const [data, setData] = useState([])
+    const [searchData, setSearchData] = useState('')
 
     const setSelect = (e) => {
         setData(state => [...state, e])
@@ -35,67 +36,20 @@ const ExploreChallenge = () => {
         }
     }
 
-    //     {
-    //         id: 1,
-    //         image: img1,
-    //         status: "Upcoming",
-    //         level: "Easy",
-    //         title: "Data Science Bootcamp - Graded Datathon",
-    //         description: "This is a 3 day long datathon where you will be given a dataset and you have to perform data analysis and build a model to predict the target variable. The top 3 participants will be awarded with cash prizes.",
-    //         startTime: "2022-10-16",
-    //         endTime: "2026-11-07",
-    //     },
-    //     {
-    //         id: 2,
-    //         image: img2,
-    //         status: "Upcoming",
-    //         level: "Easy",
-    //         title: "Data Sprint 72 - Butterfly Identification",
-    //         description: "This is a 3 day long datathon where you will be given a dataset and you have to perform data analysis and build a model to predict the target variable. The top 3 participants will be awarded with cash prizes.",
-    //         startTime: "2022-10-07",
-    //         endTime: "2026-11-07",
-    //     },
-    //     {
-    //         id: 3,
-    //         image: img3,
-    //         status: "Active",
-    //         level: "Medium",
-    //         title: "Data Sprint 71 - Weather Recognition",
-    //         description: "This is a 3 day long datathon where you will be given a dataset and you have to perform data analysis and build a model to predict the target variable. The top 3 participants will be awarded with cash prizes.",
-    //         startTime: current,
-    //         endTime: "2026-11-07",
-    //     },
-    //     {
-    //         id: 4,
-    //         image: img4,
-    //         status: "Active",
-    //         level: "Medium",
-    //         title: "Data Sprint 70-Airline Passenger Satisfaction",
-    //         description: "This is a 3 day long datathon where you will be given a dataset and you have to perform data analysis and build a model to predict the target variable. The top 3 participants will be awarded with cash prizes.",
-    //         startTime: current,
-    //         endTime: "2026-11-07",
-    //     },
-    //     {
-    //         id: 5,
-    //         image: img5,
-    //         status: "Past",
-    //         level: "Hard",
-    //         title: "Engineering Graduates Employment Outcomes",
-    //         description: "This is a 3 day long datathon where you will be given a dataset and you have to perform data analysis and build a model to predict the target variable. The top 3 participants will be awarded with cash prizes.",
-    //         startTime: `2022-02-05`,
-    //         endTime: `2022-02-07`,
-    //     },
-    //     {
-    //         id: 6,
-    //         image: img6,
-    //         status: "Past",
-    //         level: "Hard",
-    //         title: "Travel Insurance Claim Prediction",
-    //         description: "This is a 3 day long datathon where you will be given a dataset and you have to perform data analysis and build a model to predict the target variable. The top 3 participants will be awarded with cash prizes.",
-    //         startTime: `2022-02-05`,
-    //         endTime: `2022-02-07`,
-    //     },
-    // ];
+
+    /**
+     * @name renderFilteredSearch
+     * @description filter the data based on the entered text and filter applied
+     * @returns {array} filtered data
+     */
+    const renderFilteredSearch = () => {
+        const data = searchData;
+
+        const searched = renderFilteredData().filter(hack => hack.title.toLowerCase().includes(data.toLowerCase()))
+        
+        return searched;
+
+    }
 
     return (
         <div className='font-Poppins'>
@@ -114,7 +68,7 @@ const ExploreChallenge = () => {
                                         <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" className="w-6 h-6"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                                     </button>
                                 </span>
-                                <input type="search" name="q" className="py-2 w-[50vw] text-sm text-white bg-[#dbdbdb] placeholder:text-[#858585] focus:placeholder:text-[#dbdbdb] rounded-md pl-10 focus:outline-none focus:bg-white focus:text-gray-900" placeholder="Search" autoComplete="off" />
+                                <input onChange={(e) => setSearchData(e.target.value)} value={searchData} type="search" name="q" className="py-2 w-[50vw] text-sm text-white bg-[#dbdbdb] placeholder:text-[#858585] focus:placeholder:text-[#dbdbdb] rounded-md pl-10 focus:outline-none focus:bg-white focus:text-gray-900" placeholder="Search" autoComplete="off" />
                             </div>
                         </form>
 
@@ -152,18 +106,23 @@ const ExploreChallenge = () => {
             {/* Hack Cards */}
             <div className='grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 py-[10vh] px-[6vw] bg-[#003145] text-white'>
 
-                {/* {hackData.map((item, index) => (
-                    <div className='my-9 md:mx-9'>
-                        <HackCard id={item.id} key={index} img={item.image} status={item.status} title={item.title} startTime={item.startTime} endTime={item.endTime} />
-                    </div>
+                {searchData
+                    ?
+                    renderFilteredSearch().map((item, index) => (
 
-                ))} */}
-                {renderFilteredData().map((item, index) => (
-                    <div className='my-9 md:mx-9'>
-                        <HackCard id={item.id} key={index} img={item.image} status={item.status} title={item.title} startTime={item.startTime} endTime={item.endTime} />
-                    </div>
+                            <div className='my-9 md:mx-9'>
+                                <HackCard id={item.id} key={index} img={item.image} status={item.status} title={item.title} startTime={item.startTime} endTime={item.endTime} />
+                            </div>
 
-                ))}
+                    ))
+                    :
+                    renderFilteredData().map((item, index) => (
+                        <div className='my-9 md:mx-9'>
+                            <HackCard id={item.id} key={index} img={item.image} status={item.status} title={item.title} startTime={item.startTime} endTime={item.endTime} />
+                        </div>
+
+                    ))
+                }
 
 
             </div>
